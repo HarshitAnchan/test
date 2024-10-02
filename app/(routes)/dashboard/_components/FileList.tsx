@@ -181,11 +181,10 @@ function FileList() {
   }, [fileList_]);
 
   const handleDelete = async (fileId: string, e: React.MouseEvent) => {
-    // Stop event propagation to prevent redirection
     e.stopPropagation();
 
     try {
-      await deleteFile({ _id: fileId });
+      await deleteFile({ _id: fileId } as any); // Cast to any
       toast("File deleted successfully!");
 
       // Optionally update the file list locally after deletion
