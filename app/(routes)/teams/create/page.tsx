@@ -10,83 +10,97 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+
+interface User {
+  email?: string;
+  given_name?: string;
+  family_name?: string;
+}
 
 function CreateTeam() {
   const [teamName, setTeamName] = useState("");
   const createTeam = useMutation(api.teams.createTeam);
-  const { user }: any = useKindeBrowserClient();
+  const { user } = useKindeBrowserClient();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const createNewTeam = () => {
-    createTeam({
-      teamName: teamName,
-      createdBy: user?.email,
-    }).then((resp) => {
-      console.log(resp);
-      if (resp) {
-        router.push("/dashboard");
-        toast("Team created successfully!!!");
-      }
-    });
+    if (user?.email) {
+      setIsLoading(true);
+      createTeam({
+        teamName: teamName,
+        createdBy: user.email,
+      })
+        .then((resp) => {
+          if (resp) {
+            router.push("/dashboard");
+            toast.success("Team created successfully!");
+          }
+        })
+        .catch((error) => {
+          toast.error("Failed to create team. Please try again.");
+          console.error("Team creation error:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      toast.error("User email not available. Please ensure you're logged in.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <motion.div
-        className="relative z-10 bg-black bg-opacity-80 p-8 rounded-lg shadow-2xl max-w-md w-full"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
       >
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-8"
-        >
-          <Image
-            src="/logo-black1.png"
-            alt="logo"
-            width={150}
-            height={150}
-            className="invert mx-auto"
-          />
-        </motion.div>
-
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <h2 className="text-3xl font-bold text-center">Create Your Team</h2>
-          <p className="text-gray-300 text-center">
-            Choose a name that represents your team's vision and goals.
-          </p>
-          <div>
-            <label
-              htmlFor="teamName"
-              className="text-sm font-medium text-gray-300 block mb-2"
-            >
-              Team Name
-            </label>
-            <Input
-              id="teamName"
-              placeholder="Enter team name"
-              className="bg-gray-800 bg-opacity-50 border-gray-700 text-white placeholder-gray-500"
-              onChange={(e) => setTeamName(e.target.value)}
-            />
-          </div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Card>
+          <CardHeader className="space-y-1">
+            <div className="flex justify-center mb-4">
+              <Image
+                src="/logo-black1.png"
+                alt="logo"
+                width={100}
+                height={100}
+                className="mx-auto"
+              />
+            </div>
+            <CardTitle className="text-2xl font-bold text-center">
+              Create Your Team
+            </CardTitle>
+            <CardDescription className="text-center">
+              Choose a name that represents your team's vision and goals.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="teamName">Team Name</Label>
+              <Input
+                id="teamName"
+                placeholder="Enter team name"
+                onChange={(e) => setTeamName(e.target.value)}
+              />
+            </div>
             <Button
-              className="w-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-300"
-              disabled={!(teamName && teamName?.length > 0)}
-              onClick={() => createNewTeam()}
+              className="w-full"
+              disabled={!teamName.trim() || isLoading}
+              onClick={createNewTeam}
             >
-              Create Team
+              {isLoading ? "Creating..." : "Create Team"}
             </Button>
-          </motion.div>
-        </motion.div>
+          </CardContent>
+        </Card>
       </motion.div>
     </div>
   );

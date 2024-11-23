@@ -1,74 +1,74 @@
-"use client";
-
+import { Button } from "@/components/ui/button";
+import React from "react";
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin } from "lucide-react";
-import Image from "next/image"; // Import Next.js Image component
+import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs";
 
-const socialLinks = [
-  { icon: Github, href: "https://github.com/HarshitAnchan" },
-  { icon: Twitter, href: "https://x.com/HarshitAnchan02" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/harshitanchan/" },
-];
+const JoinUsSection: React.FC = () => {
+  const signInNow = () => {
+    // Implement sign in functionality here
+    console.log("Sign in clicked");
+  };
 
-const FooterLink = ({ href, children }: any) => (
-  <motion.a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-gray-400 hover:text-white transition-colors"
-    whileHover={{ scale: 1.2, rotate: 5 }}
-    whileTap={{ scale: 0.9 }}
-  >
-    {children}
-  </motion.a>
-);
-
-export default function AnimatedFooter() {
   return (
-    <footer className="bg-black text-white py-8">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center"
-        >
-          {/* Replace SVG with Next.js Image component */}
-          <motion.div
-            className="mb-4"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Image
-              src="/logo.png" // Update with your image path
-              alt="Your Image Description" // Update with your image description
-              width={40} // Set appropriate width
-              height={40} // Set appropriate height
-            />
-          </motion.div>
-          <motion.div
-            className="flex space-x-4 mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            {socialLinks.map((link, index) => (
-              <FooterLink key={index} href={link.href}>
-                <link.icon size={24} />
-              </FooterLink>
-            ))}
-          </motion.div>
-          <motion.p
-            className="text-sm text-gray-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-          >
-            © {new Date().getFullYear()} Trace.io. All rights reserved.
-          </motion.p>
-        </motion.div>
-      </div>
-    </footer>
+    <>
+      <section className="bg-white">
+        <div className="max-w-lg bg-white px-4 pt-24 py-8 mx-auto text-left md:max-w-none md:text-center">
+          <h1 className="text-3xl font-extrabold leading-10 tracking-tight text-left text-black text-center sm:leading-none md:text-6xl text-4xl lg:text-7xl">
+            <span className="inline md:block">Kickstart</span>
+            <br />
+            <span className="mt-2 md:inline-block">
+              {" "}
+              Your Collaboration
+              <span className="bg-clip-text text-transparent bg-gradient-to-r bg-black">
+                {" "}
+                <br />
+                Journey Today!
+              </span>{" "}
+            </span>
+          </h1>
+          <div className="flex justify-center items-center ">
+            <RegisterLink>
+              <motion.button
+                className=" mt-9 px-8 py-3 text-lg font-semibold text-white bg-black rounded-full border-2 border-black transition-colors duration-300 ease-in-out hover:bg-white hover:text-black"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+              </motion.button>
+            </RegisterLink>
+          </div>
+        </div>
+      </section>
+
+      <hr className="border-gray-300 mx-5" />
+
+      <footer className="bg-white pb-5">
+        <div className="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8">
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <div className="flex justify-center text-black sm:justify-start">
+              <img
+                className="rounded-full"
+                src="/logo-black1.png"
+                width="40"
+                height="40"
+                alt="logo"
+              />
+              <span className="p-2 font-bold tracking-tighter text-xl">
+                Trace.io
+              </span>
+            </div>
+
+            <p className="mt-4 text-sm text-center text-gray-600 lg:text-right lg:mt-0">
+              T&C &nbsp; Career &nbsp; Privacy & Policy &nbsp; Developers
+            </p>
+          </div>
+          <p className="mt-4 text-sm text-center text-gray-600 lg:mt-2">
+            © 2024 Trace.io. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </>
   );
-}
+};
+
+export default JoinUsSection;

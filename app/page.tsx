@@ -4,12 +4,13 @@ import Header from "./_components/Header";
 import Hero from "./_components/Hero";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useEffect } from "react";
-import GlassHeader from "./_components/Header";
-import AbstractArtFeatures from "./_components/Feature";
-import HowItWorks from "./_components/Works";
-import InnovativeHowItWorks from "./_components/Works";
+
 import UniqueFAQ from "./_components/Faq";
-import AnimatedFooter from "./_components/Footer";
+import FontsNinja from "./_components/Hero";
+import { HeroVideoDialogDemo } from "./_components/Video";
+import { WobbleCardDemo } from "./_components/Feature";
+import { SparklesTextDemo } from "./_components/Box";
+import JoinUsSection from "./_components/Footer";
 
 export default function Home() {
   const { user } = useKindeBrowserClient();
@@ -19,12 +20,14 @@ export default function Home() {
   }, [user]);
   return (
     <div>
-      <GlassHeader />
-      <Hero />
-      <AbstractArtFeatures />
-      <InnovativeHowItWorks />
+      <FontsNinja />
+      <HeroVideoDialogDemo />
+      <div className="flex justify-center items-center my-8">
+        <SparklesTextDemo />
+      </div>
+      <WobbleCardDemo />
       <UniqueFAQ />
-      <AnimatedFooter />
+      <JoinUsSection />
     </div>
   );
 }

@@ -36,7 +36,7 @@ function GenerateAITemplate({ setGenerateAIOutput }) {
     <div>
       <Button
         variant="outline"
-        className="flex gap-2"
+        className="flex gap-2 bg-black text-white"
         onClick={() => setOpen(true)}
       >
         <Bot className="h-4 w-4" /> Generate AI

@@ -104,14 +104,7 @@ export default function UniqueHeader() {
                 animate="visible"
                 whileHover="hover"
                 whileTap="tap"
-              >
-                <Button className="rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 transition-all duration-300">
-                  <span className="flex items-center space-x-1">
-                    <span>Sign Up</span>
-                    <Sparkles className="w-4 h-4" />
-                  </span>
-                </Button>
-              </motion.div>
+              ></motion.div>
             </RegisterLink>
           </div>
         </div>
