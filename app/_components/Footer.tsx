@@ -1,74 +1,118 @@
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { motion } from "framer-motion";
-import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs";
+import Link from "next/link";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
-const JoinUsSection: React.FC = () => {
-  const signInNow = () => {
-    // Implement sign in functionality here
-    console.log("Sign in clicked");
-  };
+const navigationItems = [
+  {
+    title: "Product",
+    items: [
+      { title: "Features", href: "/features" },
+      { title: "Integrations", href: "/integrations" },
+      { title: "Pricing", href: "/pricing" },
+      { title: "Changelog", href: "/changelog" },
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      { title: "About", href: "/about" },
+      { title: "Blog", href: "/blog" },
+      { title: "Careers", href: "/careers" },
+      { title: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Resources",
+    items: [
+      { title: "Documentation", href: "/docs" },
+      { title: "Help Center", href: "/help" },
+      { title: "Guides", href: "/guides" },
+      { title: "API Reference", href: "/api" },
+    ],
+  },
+  {
+    title: "Legal",
+    items: [
+      { title: "Privacy", href: "/privacy" },
+      { title: "Terms", href: "/terms" },
+      { title: "Security", href: "/security" },
+      { title: "Cookies", href: "/cookies" },
+    ],
+  },
+];
 
+const socialLinks = [
+  { icon: Facebook, href: "https://facebook.com" },
+  { icon: Twitter, href: "https://twitter.com" },
+  { icon: Instagram, href: "https://instagram.com" },
+  { icon: Linkedin, href: "https://linkedin.com" },
+];
+
+export const Footer = () => {
   return (
-    <>
-      <section className="bg-white">
-        <div className="max-w-lg bg-white px-4 pt-24 py-8 mx-auto text-left md:max-w-none md:text-center">
-          <h1 className="text-3xl font-extrabold leading-10 tracking-tight text-left text-black text-center sm:leading-none md:text-6xl text-4xl lg:text-7xl">
-            <span className="inline md:block">Kickstart</span>
-            <br />
-            <span className="mt-2 md:inline-block">
-              {" "}
-              Your Collaboration
-              <span className="bg-clip-text text-transparent bg-gradient-to-r bg-black">
-                {" "}
-                <br />
-                Journey Today!
-              </span>{" "}
-            </span>
-          </h1>
-          <div className="flex justify-center items-center ">
-            <RegisterLink>
-              <motion.button
-                className=" mt-9 px-8 py-3 text-lg font-semibold text-white bg-black rounded-full border-2 border-black transition-colors duration-300 ease-in-out hover:bg-white hover:text-black"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Started
-              </motion.button>
-            </RegisterLink>
-          </div>
-        </div>
-      </section>
-
-      <hr className="border-gray-300 mx-5" />
-
-      <footer className="bg-white pb-5">
-        <div className="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8">
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <div className="flex justify-center text-black sm:justify-start">
-              <img
-                className="rounded-full"
-                src="/logo-black1.png"
-                width="40"
-                height="40"
-                alt="logo"
-              />
-              <span className="p-2 font-bold tracking-tighter text-xl">
-                Trace.io
-              </span>
-            </div>
-
-            <p className="mt-4 text-sm text-center text-gray-600 lg:text-right lg:mt-0">
-              T&C &nbsp; Career &nbsp; Privacy & Policy &nbsp; Developers
+    <footer className="bg-black text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          <div className="col-span-2">
+            <Link href="/" className="text-2xl font-bold text-white">
+              Trace.io
+            </Link>
+            <p className="mt-4 text-sm">
+              Transforming collaboration with AI-powered tools for real-time
+              document editing, whiteboarding, and seamless communication.
             </p>
+            <div className="mt-6 flex space-x-6">
+              {socialLinks.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-gray-400 hover:text-gray-300"
+                >
+                  <span className="sr-only">{item.icon.name}</span>
+                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </div>
-          <p className="mt-4 text-sm text-center text-gray-600 lg:mt-2">
-            © 2024 Trace.io. All rights reserved.
-          </p>
+          {navigationItems.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-sm font-semibold text-white tracking-wider uppercase">
+                {section.title}
+              </h3>
+              <ul className="mt-4 space-y-4">
+                {section.items.map((item) => (
+                  <li key={item.title}>
+                    <Link
+                      href={item.href}
+                      className="text-base hover:text-white transition-colors duration-200"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </footer>
-    </>
+        <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-base text-gray-400">
+            &copy; {new Date().getFullYear()} Trace.io. All rights reserved.
+          </p>
+          <div className="mt-4 sm:mt-0">
+            <Link
+              href="/privacy"
+              className="text-base hover:text-white transition-colors duration-200 mr-4"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-base hover:text-white transition-colors duration-200"
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
-
-export default JoinUsSection;

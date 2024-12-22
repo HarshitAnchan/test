@@ -1,16 +1,16 @@
 "use client";
 import Image from "next/image";
 import Header from "./_components/Header";
-import Hero from "./_components/Hero";
+// import Hero from "./_components/Hero";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useEffect } from "react";
 
-import UniqueFAQ from "./_components/Faq";
-import FontsNinja from "./_components/Hero";
+import { FAQ } from "./_components/Faq";
+import { Hero } from "./_components/Hero";
 import { HeroVideoDialogDemo } from "./_components/Video";
-import { WobbleCardDemo } from "./_components/Feature";
-import { SparklesTextDemo } from "./_components/Box";
-import JoinUsSection from "./_components/Footer";
+import { FeatureSection } from "./_components/Feature";
+import { Footer } from "./_components/Footer";
+import Navbar from "./_components/Navbar";
 
 export default function Home() {
   const { user } = useKindeBrowserClient();
@@ -20,14 +20,14 @@ export default function Home() {
   }, [user]);
   return (
     <div>
-      <FontsNinja />
+      <Navbar />
+      <Hero />
       <HeroVideoDialogDemo />
-      <div className="flex justify-center items-center my-8">
-        <SparklesTextDemo />
-      </div>
-      <WobbleCardDemo />
-      <UniqueFAQ />
-      <JoinUsSection />
+
+      <FeatureSection />
+      <FAQ />
+      <Footer />
+      {/* <JoinUsSection /> */}
     </div>
   );
 }

@@ -1,7 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { PhoneCall, Plus, Mail, Github, Twitter } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { motion } from "framer-motion";
 
 const faqs = [
   {
@@ -36,112 +52,149 @@ const faqs = [
   },
 ];
 
-export default function EnhancedFAQ() {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+    },
+  },
+};
+
+export const FAQ = () => {
   return (
-    <section className="bg-white text-black py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-3xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-black"
-        >
-          Frequently Asked Questions
-        </motion.h2>
+    <section
+      id="faqs"
+      className="w-full py-20 lg:py-32 relative overflow-hidden"
+    >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+
+      <div className="container mx-auto px-4 relative">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="space-y-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex text-center justify-center items-center gap-6 flex-col mb-16"
         >
-          {faqs.map((faq, index) => (
-            <FAQItem
-              key={index}
-              question={faq.question}
-              answer={faq.answer}
-              index={index}
-            />
-          ))}
+          <Badge variant="outline" className="px-4 py-1">
+            Frequently Asked Questions
+          </Badge>
+          <div className="flex gap-4 flex-col max-w-2xl">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-4xl md:text-5xl font-bold tracking-tight text-center bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400"
+            >
+              Everything you need to know
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-lg leading-relaxed text-muted-foreground"
+            >
+              Can't find the answer you're looking for? Reach out to our
+              customer support team.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="gap-2" variant="outline" size="lg">
+                  Contact Support
+                  <PhoneCall className="w-4 h-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Contact Support</DialogTitle>
+                  <DialogDescription>
+                    Get in touch with us through the following channels:
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="flex items-center gap-4">
+                    <Mail className="h-5 w-5 text-muted-foreground" />
+                    <a
+                      href="mailto:harshitanchan647@gmail.com"
+                      className="text-sm font-medium hover:underline"
+                    >
+                      harshitanchan647@gmail.com
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Github className="h-5 w-5 text-muted-foreground" />
+                    <a
+                      href="https://github.com/HarshitAnchan"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium hover:underline"
+                    >
+                      HarshitAnchan
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Twitter className="h-5 w-5 text-muted-foreground" />
+                    <a
+                      href="https://twitter.com/harshit_anchan"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium hover:underline"
+                    >
+                      @harshit_anchan
+                    </a>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-3xl w-full mx-auto"
+        >
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+              <motion.div key={index} variants={itemVariants} custom={index}>
+                <AccordionItem value={`item-${index}`} className="border-none">
+                  <AccordionTrigger className="hover:no-underline py-6 px-4 rounded-lg hover:bg-muted/50 data-[state=open]:bg-muted/50 transition-all gap-4">
+                    <span className="text-left font-medium">
+                      {faq.question}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-6">
+                    <div className="text-muted-foreground">{faq.answer}</div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
         </motion.div>
       </div>
     </section>
   );
-}
-
-function FAQItem({ question, answer, index }: any) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="bg-white rounded-lg overflow-hidden border border-gray-200"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-    >
-      <motion.button
-        className="flex justify-between items-center w-full p-4 text-left focus:outline-none"
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ backgroundColor: "rgba(0,0,0,0.05)" }}
-        whileTap={{ backgroundColor: "rgba(0,0,0,0.1)" }}
-      >
-        <motion.span
-          className="text-xl font-medium"
-          animate={isHovered ? { x: 10 } : { x: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        >
-          {question}
-        </motion.span>
-        <motion.div
-          animate={isOpen ? "open" : "closed"}
-          className="relative w-6 h-6"
-        >
-          <motion.span
-            variants={{
-              open: { rotate: 45, y: 0 },
-              closed: { rotate: 0, y: 0 },
-            }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex items-center justify-center text-2xl font-bold"
-          >
-            +
-          </motion.span>
-        </motion.div>
-      </motion.button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-          >
-            <motion.div
-              className="p-4 pt-0"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <p className="text-gray-600">{answer}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <motion.div
-        className="absolute inset-0 border-2 border-blue-500 rounded-lg pointer-events-none"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={
-          isHovered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
-        }
-        transition={{ duration: 0.3 }}
-      />
-    </motion.div>
-  );
-}
+};
